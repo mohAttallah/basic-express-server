@@ -12,22 +12,19 @@ const serverError = require("./src/error-handlers/500");
 // middleware
 const validator = require("./src/middleware/validator");
 const agent = require("./src/middleware/browserAgent");
-const logger = require("./src/middleware/logger")
+const logger = require("./src/middleware/logger");
 
 app.use(logger);
 
-
-app.get("/",agent,  (req, res) => {
-  
+app.get("/", agent, (req, res) => {
   res.status(200).json({
     message: "Welcome To Home Page",
     agent: req.userAgent,
   });
-})
-
+});
 
 // endpoint :http://localhost:3000/person?name=Mohamad
-app.get("/person", validator , (req, res) => {
+app.get("/person", validator, (req, res) => {
   const name = req.query.name;
   res.status(200).json({
     code: 200,
@@ -35,12 +32,9 @@ app.get("/person", validator , (req, res) => {
   });
 });
 
-
-
 // Error Handle
 app.use("*", pageNotFound);
 app.use(serverError);
-
 
 function start(port) {
   app.listen(PORT, () => {
